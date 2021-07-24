@@ -1,9 +1,9 @@
 ---
 page_type: sample
 languages:
-- php
+  - php
 products:
-- azure
+  - azure
 description: "This sample demonstrates a tiny Hello World PHP app for App Service."
 urlFragment: php-docs-hello-world
 ---
