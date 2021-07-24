@@ -10,7 +10,7 @@ require __DIR__ . '/../vendor/autoload.php';
 $app = AppFactory::create();
 
 // Create Twig
-$twig = Twig::create('templates', ['cache' => false]);
+$twig = Twig::create('../templates', ['cache' => false]);
 $app->add(TwigMiddleware::create($app, $twig));
 
 $app->get('/hello', function (Request $request, Response $response, $args) {
