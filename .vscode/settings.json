@@ -4,4 +4,14 @@
   },
   "files.eol": "\n",
   "editor.tabSize": 2,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue"
+  ],
+    // デフォルトの設定はオフにしておく
+    "typescript.format.enable": false,
+    "javascript.format.enable": false,
 }
