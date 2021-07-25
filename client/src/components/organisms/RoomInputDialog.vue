@@ -1,19 +1,15 @@
 <template>
-  <Button label="Show" icon="pi pi-external-link" @click="openBasic" />
+  <Button label="登録" icon="pi pi-external-link" @click="openBasic" />
   <Dialog
-    header="Header"
+    :header="title"
     v-model:visible="displayBasic"
     :style="{ width: '50vw' }"
   >
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-      est laborum.
-    </p>
+    <div>
+      <h5>シナリオタイトル</h5>
+      <InputText type="text" v-model="room.title" />
+      <span :style="{ marginLeft: '.5em' }">{{ room.title }}</span>
+    </div>
     <template #footer>
       <Button
         label="No"
@@ -29,9 +25,10 @@
 <script lang="ts">
 import { ref, defineComponent } from 'vue';
 import Dialog from 'primevue/dialog';
-
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
 export default defineComponent({
-  components: { Dialog },
+  components: { Dialog, Button, InputText },
   name: 'RoomInputDialog',
   props: {
     roomId: {
@@ -40,9 +37,18 @@ export default defineComponent({
       default: '',
     },
   },
-  setup: () => {
+  setup: (props) => {
+    const title = props.roomId === '' ? '登録' : '編集';
     const count = ref(0);
-    return { count };
+    const displayBasic = ref(false);
+    const openBasic = () => {
+      displayBasic.value = true;
+    };
+    const closeBasic = () => {
+      displayBasic.value = false;
+    };
+    const room = ref({ title: '' });
+    return { count, displayBasic, openBasic, closeBasic, room, title };
   },
 });
 </script>

@@ -8,7 +8,7 @@
 <script lang="ts">
 import { ref, defineComponent } from 'vue';
 import CardSample from '@/components/organisms/CardSample.vue';
-import RoomInputDialog from '../organisms/RoomInputDialog.vue';
+import RoomInputDialog from '@/components/organisms/RoomInputDialog.vue';
 
 export default defineComponent({
   components: { RoomInputDialog, CardSample },
