@@ -1,5 +1,11 @@
 <template>
   <div>テスト</div>
+  <Button
+    v-if="state.isLoggedin"
+    label="登録"
+    icon="pi pi-external-link"
+    @click="openModal"
+  />
   <RoomInputDialog />
 
   <CardSample />
@@ -10,10 +16,12 @@ import { ref, defineComponent } from 'vue';
 import CardSample from '@/components/organisms/CardSample.vue';
 import RoomInputDialog from '@/components/organisms/RoomInputDialog.vue';
 import { useAuthStore } from '@/stores/auth';
+import { useModalStore } from '@/stores/modal';
+import Button from 'primevue/button';
 
 export default defineComponent({
-  components: { RoomInputDialog, CardSample },
-  name: 'HelloWorld',
+  components: { RoomInputDialog, CardSample, Button },
+  name: 'Main',
   props: {
     msg: {
       type: String,
@@ -23,9 +31,10 @@ export default defineComponent({
   setup: () => {
     const count = ref(0);
 
-    const { signin } = useAuthStore();
+    const { signin, state } = useAuthStore();
+    const { openModal } = useModalStore();
     signin();
-    return { count };
+    return { count, openModal, state };
   },
 });
 </script>

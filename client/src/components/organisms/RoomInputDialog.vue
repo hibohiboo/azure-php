@@ -1,13 +1,7 @@
 <template>
-  <Button
-    v-if="state.isLoggedin"
-    label="登録"
-    icon="pi pi-external-link"
-    @click="openBasic"
-  />
   <Dialog
     :header="title"
-    v-model:visible="displayBasic"
+    v-model:visible="displayModal"
     :style="{ width: '50vw' }"
   >
     <div>
@@ -19,7 +13,7 @@
       <Button
         label="No"
         icon="pi pi-times"
-        @click="closeBasic"
+        @click="closeModal"
         class="p-button-text"
       />
       <Button label="登録" icon="pi pi-check" @click="create" autofocus />
@@ -33,6 +27,8 @@ import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import roomStore from '@/stores/room';
+import { useModalStore } from '@/stores/modal';
+
 export default defineComponent({
   components: { Dialog, Button, InputText },
   name: 'RoomInputDialog',
@@ -46,25 +42,17 @@ export default defineComponent({
   setup: (props) => {
     const title = props.roomId === '' ? '登録' : '編集';
     const count = ref(0);
-    const displayBasic = ref(false);
-    const openBasic = () => {
-      displayBasic.value = true;
-    };
-    const closeBasic = () => {
-      displayBasic.value = false;
-    };
-
+    const { displayModal, closeModal } = useModalStore();
     const { room, state, createRoom } = roomStore();
     const create = async () => {
       await createRoom();
-      closeBasic();
+      closeModal();
     };
 
     return {
       count,
-      displayBasic,
-      openBasic,
-      closeBasic,
+      displayModal,
+      closeModal,
       title,
       room,
       state,
