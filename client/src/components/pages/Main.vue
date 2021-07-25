@@ -1,21 +1,25 @@
 <template>
-  <div>テスト</div>
+  <h1></h1>
   <Button
     v-if="state.isLoggedin"
-    label="登録"
+    label="ルームスクリーンショット追加"
     icon="pi pi-external-link"
     @click="openCreateModal"
   />
   <RoomInputDialog />
 
   <Carousel
-    :value="rooms.list"
+    :value="rooms.list.filter((i) => i.tags.includes(q))"
     :num-visible="3"
     :num-scroll="3"
     :responsive-options="responsiveOptions"
   >
     <template #header>
-      <h5>かっこいいルーム</h5>
+      <h5>ココフォリア・ユドナリウムのルーム集</h5>
+      <label
+        >絞りこみ:
+        <InputText v-model="q" />
+      </label>
     </template>
     <template #item="slotProps">
       <div class="product-item">
@@ -29,10 +33,19 @@
           </div>
           <div>
             <h4 class="p-mb-1">{{ slotProps.data.title }}</h4>
+            <div class="product-tags">
+              <span :class="'product-badge status-'">
+                <Tag
+                  v-for="(item, index) in slotProps.data.tags
+                    .split(' ')
+                    .filter((i) => !!i)"
+                  :key="`tag-${index}`"
+                  :value="item"
+                  style="margin-left: 10px"
+                  @click="() => (q = item)"
+              /></span>
+            </div>
 
-            <span :class="'product-badge status-'">{{
-              slotProps.data.tags
-            }}</span>
             <div class="car-buttons p-mt-5">
               <Button
                 v-if="state.uid === slotProps.data.uid"
@@ -57,9 +70,11 @@ import { useRoomStore } from '@/stores/room';
 import Button from 'primevue/button';
 import Carousel from 'primevue/carousel';
 import roomsStore from '@/stores/rooms';
+import Tag from 'primevue/tag';
+import InputText from 'primevue/inputtext';
 
 export default defineComponent({
-  components: { RoomInputDialog, Carousel, Button },
+  components: { RoomInputDialog, Carousel, Button, Tag, InputText },
   name: 'Main',
   props: {
     msg: {
@@ -69,11 +84,13 @@ export default defineComponent({
   },
   setup: () => {
     const count = ref(0);
+    const q = ref('');
 
     const { signin, state } = useAuthStore();
     const { openCreateModal, openEditModal } = useRoomStore();
     signin();
     const { rooms } = roomsStore();
+
     const responsiveOptions = [
       {
         breakpoint: '1024px',
@@ -98,6 +115,7 @@ export default defineComponent({
       state,
       responsiveOptions,
       rooms,
+      q,
     };
   },
 });
@@ -124,6 +142,13 @@ export default defineComponent({
   .product-image {
     width: 50%;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  }
+  .product-badge {
+    margin: 10px;
+  }
+  .product-tags {
+    padding-bottom: 10px;
+    cursor: pointer;
   }
 }
 </style>
