@@ -22,6 +22,9 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
   // デフォルトの設定はオフにしておく
   "typescript.format.enable": false,
   "javascript.format.enable": false,
