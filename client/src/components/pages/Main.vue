@@ -26,7 +26,7 @@
         <div class="product-item-content">
           <div class="p-mb-3">
             <img
-              :src="`http://localhost:8080/uploads/${slotProps.data.uid}/${slotProps.data.roomId}.png`"
+              :src="`/uploads/${slotProps.data.uid}/${slotProps.data.roomId}.png`"
               :alt="slotProps.data.name"
               class="product-image"
             />
@@ -40,7 +40,7 @@
                   v-for="(item, index) in slotProps.data.tags
                     .split(' ')
                     .filter((i) => !!i)"
-                  :key="`tag-${index}`"
+                  :key="`tag-${index.toString()}`"
                   :value="item"
                   style="margin-left: 10px"
                   @click="() => (q = item)"
@@ -64,7 +64,7 @@
                   v-for="(item, index) in slotProps.data.materials.filter(
                     (i) => !!i.name,
                   )"
-                  :key="`material-${index}`"
+                  :key="`material-${index.toString()}`"
                 >
                   <th>利用素材</th>
                   <td>

@@ -3,7 +3,7 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "strict": true,
+    "strict": false, // vue テンプレート内の型☑で怒る
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,

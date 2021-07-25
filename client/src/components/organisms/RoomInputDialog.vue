@@ -12,7 +12,7 @@
       <div>png画像をアップロードしてください。</div>
       <FileUpload
         name="demo"
-        :url="`http://localhost:8080/roomUpload/${state.uid}/${room.roomId}`"
+        :url="`/roomUpload/${state.uid}/${room.roomId}`"
         :auto="true"
         accept="image/png"
         :max-file-size="1000000"
