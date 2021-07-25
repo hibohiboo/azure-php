@@ -4,7 +4,7 @@
     v-if="state.isLoggedin"
     label="登録"
     icon="pi pi-external-link"
-    @click="openModal"
+    @click="openCreateModal"
   />
   <RoomInputDialog />
 
@@ -16,7 +16,7 @@ import { ref, defineComponent } from 'vue';
 import CardSample from '@/components/organisms/CardSample.vue';
 import RoomInputDialog from '@/components/organisms/RoomInputDialog.vue';
 import { useAuthStore } from '@/stores/auth';
-import { useModalStore } from '@/stores/modal';
+import { useRoomStore } from '@/stores/room';
 import Button from 'primevue/button';
 
 export default defineComponent({
@@ -32,9 +32,9 @@ export default defineComponent({
     const count = ref(0);
 
     const { signin, state } = useAuthStore();
-    const { openModal } = useModalStore();
+    const { openCreateModal } = useRoomStore();
     signin();
-    return { count, openModal, state };
+    return { count, openCreateModal, state };
   },
 });
 </script>

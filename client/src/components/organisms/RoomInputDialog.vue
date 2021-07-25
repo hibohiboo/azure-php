@@ -1,13 +1,20 @@
 <template>
   <Dialog
     :header="title"
-    v-model:visible="displayModal"
+    v-model:visible="room.displayModal"
     :style="{ width: '50vw' }"
   >
     <div>
       <h5>シナリオタイトル</h5>
       <InputText type="text" v-model="room.title" />
       <span :style="{ marginLeft: '.5em' }">{{ room.title }}</span>
+      <h5>ルーム画像</h5>
+      <FileUpload
+        mode="basic"
+        name="demo"
+        url="http://localhost:8080/roomUpload"
+        :auto="true"
+      />
     </div>
     <template #footer>
       <Button
@@ -16,47 +23,33 @@
         @click="closeModal"
         class="p-button-text"
       />
-      <Button label="登録" icon="pi pi-check" @click="create" autofocus />
+      <Button label="登録" icon="pi pi-check" @click="createRoom" autofocus />
     </template>
   </Dialog>
 </template>
 
 <script lang="ts">
-import { ref, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
-import roomStore from '@/stores/room';
-import { useModalStore } from '@/stores/modal';
+import { useRoomStore } from '@/stores/room';
+import FileUpload from 'primevue/fileupload';
 
 export default defineComponent({
-  components: { Dialog, Button, InputText },
+  components: { Dialog, Button, InputText, FileUpload },
   name: 'RoomInputDialog',
-  props: {
-    roomId: {
-      type: String,
-      required: false,
-      default: '',
-    },
-  },
-  setup: (props) => {
-    const title = props.roomId === '' ? '登録' : '編集';
-    const count = ref(0);
-    const { displayModal, closeModal } = useModalStore();
-    const { room, state, createRoom } = roomStore();
-    const create = async () => {
-      await createRoom();
-      closeModal();
-    };
+
+  setup: () => {
+    const { room, state, createRoom, closeModal } = useRoomStore();
+    const title = room.isUpdate ? '編集' : '登録';
 
     return {
-      count,
-      displayModal,
       closeModal,
       title,
       room,
       state,
-      create,
+      createRoom,
     };
   },
 });
