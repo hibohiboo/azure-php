@@ -7,5 +7,5 @@ export interface Room {
   materials: {
     name: string;
     url: string;
-  };
+  }[];
 }

@@ -22,3 +22,11 @@ export const getId = async () => {
   const { id } = await list.doc();
   return id;
 };
+export const getRooms = async () => {
+  const list = await db.collection(COLLECTION_NAME).get();
+  const data = [] as any[];
+  list.forEach((doc) => {
+    data.push(doc.data());
+  });
+  return data as Room[];
+};

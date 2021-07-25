@@ -1,6 +1,7 @@
 import { inject, InjectionKey, reactive } from 'vue';
 import { useAuthStore } from './auth';
 import { create, getRoomId } from '@/domain/room/repository';
+import { Room } from '@/domain/room/types';
 
 const initRoomInputDialog = {
   title: '',
@@ -29,7 +30,19 @@ const roomStore = () => {
     room.scenarioUrl = '';
     room.displayModal = true;
     room.isUpdate = false;
+    room.tags = 'Coc ココフォリア';
+    room.materials = initRoomInputDialog.materials;
     room.roomId = await getRoomId();
+  };
+  const openEditModal = async (r: Room) => {
+    room.title = r.title;
+    room.roomId = r.roomId;
+    room.scenarioTitle = r.scenarioTitle;
+    room.scenarioUrl = r.scenarioUrl;
+    room.tags = r.tags;
+    room.materials = r.materials;
+    room.displayModal = true;
+    room.isUpdate = true;
   };
   const closeModal = () => {
     room.displayModal = false;
@@ -39,6 +52,7 @@ const roomStore = () => {
     room,
     openCreateModal,
     closeModal,
+    openEditModal,
   };
 };
 
@@ -54,17 +68,16 @@ export const useRoomStore = () => {
   }
   const { state } = useAuthStore();
   const createRoom = async () => {
-    const { roomId, title, tags, scenarioTitle, scenarioUrl } = store.room;
+    const { roomId, title, tags, scenarioTitle, scenarioUrl, materials } =
+      store.room;
+    const room = { roomId, title, tags, scenarioTitle, scenarioUrl, materials };
     if (!title) {
       alert('タイトルは必須です');
       return;
     }
-    await create(
-      roomId,
-      { roomId, title, tags, scenarioTitle, scenarioUrl },
-      state.uid,
-    );
+    await create(roomId, room, state.uid);
     store.closeModal();
+    location.reload();
   };
 
   return { ...store, createRoom, state };

@@ -9,11 +9,12 @@
       <InputText type="text" v-model="room.title" />
 
       <h5>ルーム画像</h5>
+      <div>png画像をアップロードしてください。</div>
       <FileUpload
         name="demo"
         :url="`http://localhost:8080/roomUpload/${state.uid}/${room.roomId}`"
         :auto="true"
-        accept="image/*"
+        accept="image/png"
         :max-file-size="1000000"
         choose-label="画像を選択してください"
         :show-upload-button="false"
@@ -29,6 +30,8 @@
       <h5>シナリオ名</h5>
       <InputText type="text" v-model="room.scenarioTitle" />
       <h5>シナリオURL</h5>
+      <InputText type="text" v-model="room.scenarioUrl" />
+      <h5>利用素材</h5>
       <div
         v-for="(item, index) in room.materials"
         :key="index"
