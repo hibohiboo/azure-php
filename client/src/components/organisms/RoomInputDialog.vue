@@ -29,7 +29,29 @@
       <h5>シナリオ名</h5>
       <InputText type="text" v-model="room.scenarioTitle" />
       <h5>シナリオURL</h5>
-      <InputText type="text" v-model="room.scenarioUrl" />
+      <div
+        v-for="(item, index) in room.materials"
+        :key="index"
+        class="flex"
+        style="padding-top: 2rem"
+      >
+        <span class="p-float-label">
+          <InputText
+            :id="`material-name-${index}`"
+            type="text"
+            v-model="item.name"
+          />
+          <label :for="`material-name-${index}`">素材サイト</label>
+        </span>
+        <span class="p-float-label">
+          <InputText
+            :id="`material-url-${index}`"
+            type="text"
+            v-model="item.url"
+          />
+          <label :for="`material-url-${index}`">サイトURL</label>
+        </span>
+      </div>
     </div>
     <template #footer>
       <Button

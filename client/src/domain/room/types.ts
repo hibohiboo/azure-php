@@ -4,4 +4,8 @@ export interface Room {
   tags: string;
   scenarioTitle: string;
   scenarioUrl: string;
+  materials: {
+    name: string;
+    url: string;
+  };
 }
