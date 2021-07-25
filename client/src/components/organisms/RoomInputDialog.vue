@@ -22,7 +22,7 @@
         @click="closeBasic"
         class="p-button-text"
       />
-      <Button label="Yes" icon="pi pi-check" @click="closeBasic" autofocus />
+      <Button label="登録" icon="pi pi-check" @click="create" autofocus />
     </template>
   </Dialog>
 </template>
@@ -54,7 +54,11 @@ export default defineComponent({
       displayBasic.value = false;
     };
 
-    const { room, state } = roomStore();
+    const { room, state, createRoom } = roomStore();
+    const create = async () => {
+      await createRoom();
+      closeBasic();
+    };
 
     return {
       count,
@@ -64,6 +68,7 @@ export default defineComponent({
       title,
       room,
       state,
+      create,
     };
   },
 });
