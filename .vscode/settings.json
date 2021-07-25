@@ -11,7 +11,18 @@
     "typescriptreact",
     "vue"
   ],
-    // デフォルトの設定はオフにしておく
-    "typescript.format.enable": false,
-    "javascript.format.enable": false,
+  "eslint.format.enable": false,
+  "editor.formatOnSave": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  // デフォルトの設定はオフにしておく
+  "typescript.format.enable": false,
+  "javascript.format.enable": false,
 }

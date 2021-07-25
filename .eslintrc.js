@@ -7,7 +7,6 @@ module.exports = {
     'eslint:recommended',
     'plugin:vue/vue3-strongly-recommended',
     '@vue/typescript',
-    'plugin:prettier/recommended',
     'prettier',
   ],
   parserOptions: {
@@ -16,9 +15,14 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'prettier/prettier': ['off'],
-    'quotes': ['error', 'single'],
-    'semi': ['error']
+    // 'prettier/prettier': ['off'],
+    quotes: [
+      'error',
+      'single',
+      { avoidEscape: true, allowTemplateLiterals: false },
+    ],
+    semi: ['error'],
+    'vue/script-setup-uses-vars': ['off'],
   },
   overrides: [
     {
