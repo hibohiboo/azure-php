@@ -30,13 +30,15 @@ $app->get('/hello', function (Request $request, Response $response, $args) {
 
 
 
-$app->post('/roomUpload',function (Request $request, Response $response,$args) {
+$app->post('/roomUpload/{uid}/{roomId}',function (Request $request, Response $response,$args) {
     $directory = $this->get('upload_directory');
+    $uid = $args['uid'];
+    $roomId = $args['roomId'];
     $uploadedFiles = $request->getUploadedFiles();
     // handle single input with single file upload
     $uploadedFile = $uploadedFiles['demo'];
     if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
-        $filename = moveUploadedFile($directory, $uploadedFile);
+        $filename = moveUploadedFile($directory, $uid, $roomId, $uploadedFile);
         $data = array('filename' => $filename);
         $payload = json_encode($data);
         $response->getBody()->write($payload);
@@ -54,15 +56,16 @@ $app->post('/roomUpload',function (Request $request, Response $response,$args) {
  *
  * @return string The filename of moved file
  */
-function moveUploadedFile(string $directory, UploadedFileInterface $uploadedFile)
+function moveUploadedFile(string $directory, string $subDirectory, string $basename, UploadedFileInterface $uploadedFile)
 {
     $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
 
     // see http://php.net/manual/en/function.random-bytes.php
-    $basename = bin2hex(random_bytes(8));
+    // $basename = bin2hex(random_bytes(8));
     $filename = sprintf('%s.%0.8s', $basename, $extension);
-
-    $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
+    $targetDirectory = $directory .DIRECTORY_SEPARATOR . $subDirectory;
+    mkdir($targetDirectory, 0666, true);
+    $uploadedFile->moveTo($targetDirectory . DIRECTORY_SEPARATOR . $filename);
 
     return $filename;
 }

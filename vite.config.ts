@@ -9,4 +9,7 @@ export default defineConfig({
     // viteのホットリロードのために、/で始める必要がある。
     alias: [{ find: '@', replacement: '/src' }],
   },
+  build: {
+    outDir: '../public',
+  },
 });

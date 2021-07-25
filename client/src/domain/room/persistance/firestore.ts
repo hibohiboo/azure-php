@@ -1,10 +1,9 @@
 import { db, serverTimestamp, toSerializeObject } from '@/domain/firebase';
 import { Room } from '../types';
+const COLLECTION_NAME = 'online-tool-rooms';
+export const create = async (id: string, item: Room, uid: string) => {
+  const list = db.collection(COLLECTION_NAME);
 
-export const create = async (item: Room, uid: string) => {
-  const list = db.collection('online-tool-rooms');
-
-  const { id } = await list.doc();
   await Promise.all([
     list.doc(id).set({
       ...item,
@@ -16,4 +15,10 @@ export const create = async (item: Room, uid: string) => {
   const newItem = newRef.data();
   if (!newItem) throw new Error('create failed newItem is empty');
   return { ...newItem, id, createdAt: toSerializeObject(newItem.createdAt) };
+};
+export const getId = async () => {
+  const list = db.collection(COLLECTION_NAME);
+
+  const { id } = await list.doc();
+  return id;
 };

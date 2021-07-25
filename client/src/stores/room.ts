@@ -1,15 +1,21 @@
 import { inject, InjectionKey, reactive } from 'vue';
 import { useAuthStore } from './auth';
-import { create } from '@/domain/room/repository';
+import { create, getRoomId } from '@/domain/room/repository';
 
-const initRoomInputDialog = { title: '', displayModal: false, isUpdate: false };
+const initRoomInputDialog = {
+  title: '',
+  roomId: '',
+  displayModal: false,
+  isUpdate: false,
+};
 
 const roomStore = () => {
   const room = reactive(initRoomInputDialog);
 
-  const openCreateModal = () => {
+  const openCreateModal = async () => {
     room.displayModal = true;
     room.isUpdate = false;
+    room.roomId = await getRoomId();
   };
   const closeModal = () => {
     room.displayModal = false;
@@ -34,7 +40,7 @@ export const useRoomStore = () => {
   }
   const { state } = useAuthStore();
   const createRoom = async () => {
-    await create(store.room, state.uid);
+    await create(store.room.roomId, store.room, state.uid);
     store.closeModal();
   };
 

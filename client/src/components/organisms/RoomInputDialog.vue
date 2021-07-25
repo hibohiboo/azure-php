@@ -12,7 +12,7 @@
       <FileUpload
         mode="basic"
         name="demo"
-        url="http://localhost:8080/roomUpload"
+        :url="`http://localhost:8080/roomUpload/${state.uid}/${room.roomId}`"
         :auto="true"
       />
     </div>
