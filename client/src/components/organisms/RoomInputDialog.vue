@@ -1,5 +1,10 @@
 <template>
-  <Button label="登録" icon="pi pi-external-link" @click="openBasic" />
+  <Button
+    v-if="state.isLoggedin"
+    label="登録"
+    icon="pi pi-external-link"
+    @click="openBasic"
+  />
   <Dialog
     :header="title"
     v-model:visible="displayBasic"
@@ -27,6 +32,7 @@ import { ref, defineComponent } from 'vue';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
+import roomStore from '@/stores/room';
 export default defineComponent({
   components: { Dialog, Button, InputText },
   name: 'RoomInputDialog',
@@ -47,8 +53,18 @@ export default defineComponent({
     const closeBasic = () => {
       displayBasic.value = false;
     };
-    const room = ref({ title: '' });
-    return { count, displayBasic, openBasic, closeBasic, room, title };
+
+    const { room, state } = roomStore();
+
+    return {
+      count,
+      displayBasic,
+      openBasic,
+      closeBasic,
+      title,
+      room,
+      state,
+    };
   },
 });
 </script>

@@ -12,6 +12,7 @@ const authStore = () => {
     uid: '',
   });
   const setUser = (user: firebase.User | null) => {
+    console.log('setUser', user);
     state.isLoggedin = !!user;
     if (user) {
       state.displayName = user.displayName ?? '';
