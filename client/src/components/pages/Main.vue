@@ -1,8 +1,8 @@
 <template>
   <div>テスト</div>
-  <div style="height: 300px; width: 300px">
-    <CardSample />
-  </div>
+
+  <CardSample />
+
   <div>
     <div class="card">
       <div class="p-grid p-formgrid">
@@ -32,7 +32,7 @@
         </div>
         <div class="p-field p-col-12 p-md-6">
           <h5 class="p-mt-3">Square</h5>
-          <div class="p-d-flex p-ai-end">
+          <div class="flex p-ai-end">
             <Skeleton size="2rem" class="p-mr-2"></Skeleton>
             <Skeleton size="3rem" class="p-mr-2"></Skeleton>
             <Skeleton size="4rem" class="p-mr-2"></Skeleton>
@@ -41,7 +41,7 @@
         </div>
         <div class="p-field p-col-12 p-md-6">
           <h5 class="p-mt-3">Circle</h5>
-          <div class="p-d-flex p-ai-end">
+          <div class="flex p-ai-end">
             <Skeleton shape="circle" size="2rem" class="p-mr-2"></Skeleton>
             <Skeleton shape="circle" size="3rem" class="p-mr-2"></Skeleton>
             <Skeleton shape="circle" size="4rem" class="p-mr-2"></Skeleton>
@@ -56,7 +56,7 @@
         <div class="p-field p-col-12 p-md-6 p-pr-md-6 p-pr-0">
           <h5>Card</h5>
           <div class="custom-skeleton p-p-4">
-            <div class="p-d-flex p-mb-3">
+            <div class="flex p-mb-3">
               <Skeleton shape="circle" size="4rem" class="p-mr-2"></Skeleton>
               <div>
                 <Skeleton width="10rem" class="p-mb-2"></Skeleton>
@@ -65,7 +65,7 @@
               </div>
             </div>
             <Skeleton width="100%" height="150px"></Skeleton>
-            <div class="p-d-flex p-jc-between p-mt-3">
+            <div class="flex p-jc-between p-mt-3">
               <Skeleton width="4rem" height="2rem"></Skeleton>
               <Skeleton width="4rem" height="2rem"></Skeleton>
             </div>
@@ -77,7 +77,7 @@
           <div class="custom-skeleton p-p-4">
             <ul class="p-m-0 p-p-0">
               <li class="p-mb-3">
-                <div class="p-d-flex">
+                <div class="flex">
                   <Skeleton
                     shape="circle"
                     size="4rem"
@@ -90,7 +90,7 @@
                 </div>
               </li>
               <li class="p-mb-3">
-                <div class="p-d-flex">
+                <div class="flex">
                   <Skeleton
                     shape="circle"
                     size="4rem"
@@ -103,7 +103,7 @@
                 </div>
               </li>
               <li class="p-mb-3">
-                <div class="p-d-flex">
+                <div class="flex">
                   <Skeleton
                     shape="circle"
                     size="4rem"
@@ -116,7 +116,7 @@
                 </div>
               </li>
               <li>
-                <div class="p-d-flex">
+                <div class="flex">
                   <Skeleton
                     shape="circle"
                     size="4rem"
