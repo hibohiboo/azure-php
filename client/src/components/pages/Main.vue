@@ -9,6 +9,7 @@
 import { ref, defineComponent } from 'vue';
 import CardSample from '@/components/organisms/CardSample.vue';
 import RoomInputDialog from '@/components/organisms/RoomInputDialog.vue';
+import { useAuthStore } from '@/stores/auth';
 
 export default defineComponent({
   components: { RoomInputDialog, CardSample },
@@ -21,6 +22,9 @@ export default defineComponent({
   },
   setup: () => {
     const count = ref(0);
+
+    const { signin } = useAuthStore();
+    signin();
     return { count };
   },
 });
