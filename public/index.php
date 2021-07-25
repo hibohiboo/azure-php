@@ -36,8 +36,17 @@ $app->post('/roomUpload/{uid}/{roomId}',function (Request $request, Response $re
     $roomId = $args['roomId'];
     $uploadedFiles = $request->getUploadedFiles();
     // handle single input with single file upload
-    $uploadedFile = $uploadedFiles['demo'];
+    $formName = 'demo';
+    $uploadedFile = $uploadedFiles[$formName];
     if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+        // 画像ファイル以外は保存しない
+        if (checkImageType($_FILES[$formName]['tmp_name']) == '') {
+            throw new Exception('期待しないファイルタイプ');
+        }
+        // 10M以上の画像ファイルは保存しない
+        if($uploadedFile->getSize() > 10485760) {
+            throw new Exception('大きすぎるファイル');
+        }
         $filename = moveUploadedFile($directory, $uid, $roomId, $uploadedFile);
         $data = array('filename' => $filename);
         $payload = json_encode($data);
@@ -59,7 +68,7 @@ $app->post('/roomUpload/{uid}/{roomId}',function (Request $request, Response $re
 function moveUploadedFile(string $directory, string $subDirectory, string $basename, UploadedFileInterface $uploadedFile)
 {
     $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
-
+    
     // see http://php.net/manual/en/function.random-bytes.php
     // $basename = bin2hex(random_bytes(8));
     $filename = sprintf('%s.%0.8s', $basename, $extension);
@@ -69,6 +78,53 @@ function moveUploadedFile(string $directory, string $subDirectory, string $basen
 
     return $filename;
 }
+
+function checkImageType($filename)
+{
+    // const getMimetype = (signature) => {
+//     switch (signature) {
+//       case '89504E47':
+//         return 'image/png'
+//       case '47494638':
+//         return 'image/gif'
+//       case '25504446':
+//         return 'application/pdf'
+//       case 'FFD8FFDB':
+//       case 'FFD8FFE0':
+//       case 'FFD8FFE1':
+//         return 'image/jpeg'
+//       case '504B0304':
+//         return 'application/zip'
+//       default:
+//         return 'Unknown filetype'
+//     }
+//   }
+	//先頭数文字を取得する.巨大なファイルでも先頭だけ見る.
+	$magic = file_get_contents($filename, false, null, 0, 12);
+
+	$type = '';
+	if (strpos($magic, 'GIF') === 0) {
+		//GIF87a,GIF89a
+		$type = 'GIF';
+	} else if (strpos($magic, "\x89" . 'PNG') === 0) {
+		$type = 'PNG';
+	} else if (strpos($magic, "\xFF\xD8") === 0) {
+		//FF D8 DD E0 or FF D8 FF EE
+		$type = 'JPG';
+	} else if (strpos($magic, "BM") === 0) {
+		$type = 'BMP';
+	} else if (strpos($magic, "\x25\x21") === 0) {
+		$type = 'EPS';
+	} else if (strpos($magic, "%PDF-1") === 0) {
+		//%PDF-1.3, %PDF-1.4 ...
+		$type = 'PDF';
+	}
+
+	return $type;
+}
+
+
+  
 
 $app->get('/', function ($request, $response, $args) {
     $view = Twig::fromRequest($request);
