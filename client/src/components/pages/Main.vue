@@ -34,6 +34,7 @@
           <div>
             <h4 class="p-mb-1">{{ slotProps.data.title }}</h4>
             <div class="product-tags">
+              タグ
               <span :class="'product-badge status-'">
                 <Tag
                   v-for="(item, index) in slotProps.data.tags
@@ -44,6 +45,36 @@
                   style="margin-left: 10px"
                   @click="() => (q = item)"
               /></span>
+            </div>
+            <div class="product-table">
+              <table>
+                <tr v-if="slotProps.data.scenarioTitle">
+                  <th>シナリオ</th>
+                  <td>
+                    <a
+                      v-if="slotProps.data.scenarioUrl"
+                      :href="slotProps.data.scenarioUrl"
+                      target="_blank"
+                      >{{ slotProps.data.scenarioTitle }}</a
+                    >
+                    <span v-else>{{ slotProps.data.scenarioTitle }}</span>
+                  </td>
+                </tr>
+                <tr
+                  v-for="(item, index) in slotProps.data.materials.filter(
+                    (i) => !!i.name,
+                  )"
+                  :key="`material-${index}`"
+                >
+                  <th>利用素材</th>
+                  <td>
+                    <a v-if="item.url" :href="item.url" target="_blank">{{
+                      item.name
+                    }}</a>
+                    <span v-else>{{ item.name }}</span>
+                  </td>
+                </tr>
+              </table>
             </div>
 
             <div class="car-buttons p-mt-5">
@@ -149,6 +180,20 @@ export default defineComponent({
   .product-tags {
     padding-bottom: 10px;
     cursor: pointer;
+  }
+  .product-table {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+    table {
+      border: solid 2px #000;
+      border-collapse: collapse;
+      td,
+      th {
+        border: solid 1px #000;
+        padding: 5px;
+      }
+    }
   }
 }
 </style>
