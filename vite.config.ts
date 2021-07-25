@@ -5,4 +5,8 @@ import vue from '@vitejs/plugin-vue';
 export default defineConfig({
   root: 'client',
   plugins: [vue()],
+  resolve: {
+    // viteのホットリロードのために、/で始める必要がある。
+    alias: [{ find: '@', replacement: '/src' }],
+  },
 });
