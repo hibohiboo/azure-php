@@ -9,7 +9,7 @@
   <RoomInputDialog />
 
   <Carousel
-    :value="rooms.list.filter((i) => i.tags.includes(q))"
+    :value="filterdRooms"
     :num-visible="3"
     :num-scroll="3"
     :responsive-options="responsiveOptions"
@@ -66,8 +66,8 @@
                   </td>
                 </tr>
                 <tr
-                  v-for="(item, index) in slotProps.data.materials.filter(
-                    (i) => !!i.name,
+                  v-for="(item, index) in removeEmptyName(
+                    slotProps.data.materials,
                   )"
                   :key="`material-${index.toString()}`"
                 >
@@ -109,7 +109,7 @@
 </template>
 
 <script lang="ts">
-import { ref, defineComponent } from 'vue';
+import { ref, defineComponent, computed } from 'vue';
 import RoomInputDialog from '@/components/organisms/RoomInputDialog.vue';
 import { useAuthStore } from '@/stores/auth';
 import { useRoomStore } from '@/stores/room';
@@ -124,7 +124,8 @@ export default defineComponent({
   components: { RoomInputDialog, Carousel, Button, Tag, InputText, Dialog },
   name: 'Main',
   setup: () => {
-    const q = ref('');
+    const query = decodeURI(location.search).replace('?', '');
+    const q = ref(query || '');
 
     const { signin, state } = useAuthStore();
     const { openCreateModal, openEditModal } = useRoomStore();
@@ -155,6 +156,13 @@ export default defineComponent({
       displayImage.value = img;
       displayModal.value = true;
     };
+    const removeEmptyName = (materials: { name: string }[]) =>
+      materials.filter((i) => !!i.name);
+    const filterdRooms = computed(() =>
+      rooms.list.filter((i: { tags: string; title: string }) =>
+        `${i.tags}${i.title}`.includes(q.value),
+      ),
+    );
     return {
       openCreateModal,
       openEditModal,
@@ -165,6 +173,8 @@ export default defineComponent({
       displayModal,
       displayImage,
       openDisplayModal,
+      removeEmptyName,
+      filterdRooms,
     };
   },
 });
