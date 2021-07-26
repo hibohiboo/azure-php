@@ -23,12 +23,15 @@ $app = AppFactory::create();
 $twig = Twig::create('../templates', ['cache' => false]);
 $app->add(TwigMiddleware::create($app, $twig));
 
-$app->get('/hello', function (Request $request, Response $response, $args) {
-    $response->getBody()->write("Hello world!");
-    return $response;
+$app->get('/room/{uid}/{roomId}', function ($request, $response, $args) {
+    $uid = $args['uid'];
+    $roomId = $args['roomId'];
+    $view = Twig::fromRequest($request);
+    return $view->render($response, 'index.html', [
+        'uid' => $uid,
+        'roomId'=>$roomId
+    ]);
 });
-
-
 
 $app->post('/roomUpload/{uid}/{roomId}',function (Request $request, Response $response,$args) {
     $directory = $this->get('upload_directory');
@@ -124,14 +127,15 @@ function checkImageType($filename)
 }
 
 
-  
-
 $app->get('/', function ($request, $response, $args) {
     $view = Twig::fromRequest($request);
     return $view->render($response, 'index.html', [
-        'name' => 'test name'
+        'uid' => 'Vj7ovQpJVURWbOC2Nu2rUDaibxI2',
+        'roomId'=>'UIi7BhN4dqC8G5B1ec0B'
     ]);
 });
+
+
 
 
 $app->run();
