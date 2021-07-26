@@ -1,21 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>test</title>
-  </head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TRPGルーム集</title>
+    <link
+      href="https://unpkg.com/primevue/resources/themes/saga-blue/theme.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/primevue/resources/primevue.min.css"
+      rel="stylesheet"
+    />
+    <link href="https://unpkg.com/primeicons/primeicons.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/primeflex@3.0.0/primeflex.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/primeflex@3.0.0/themes/saga-blue.css"
+    />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-V1V4RQ419E"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
 
+      gtag('config', 'G-V1V4RQ419E');
+    </script>
+    <script type="module" crossorigin src="/assets/index.dd3c3bc9.js"></script>
+    <link rel="modulepreload" href="/assets/vendor.b3d83f55.js">
+    <link rel="stylesheet" href="/assets/index.c0622684.css">
+  </head>
   <body>
-    <div class="container">
-      <div class="holder">
-        <h1 class="ttl">hoge</h1>
-        <div>{{name}}</div>
-        <img
-          src="/assets/images/garden_images/flowers.svg"
-          width="100"
-          height="100"
-        />
-      </div>
-    </div>
+    <div id="app"></div>
+    
+    <footer style="font-size: 0.7rem">
+      <a
+        href="https://twitter.com/hibohiboo"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Presented by hibohiboo</a
+      ><a href="/infos/agreement.html"> 利用規約 </a
+      ><a href="/infos/privacy-policy.html"> プライバシーポリシー </a>
+    </footer>
   </body>
 </html>
