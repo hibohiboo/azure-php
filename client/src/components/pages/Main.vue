@@ -79,6 +79,15 @@
                 </tr>
               </table>
             </div>
+            <div>
+              <a
+                :href="`https://twitter.com/share?original_referer=https://az-php-app.azurewebsites.net/${state.uid}/${slotProps.data.roomId}?${slotProps.data.title}`"
+                class="twitter-share-button"
+                data-show-count="false"
+                target="_blank"
+                >Tweet</a
+              >
+            </div>
 
             <div class="car-buttons p-mt-5">
               <Button
