@@ -81,7 +81,7 @@
             </div>
             <div>
               <a
-                :href="`https://twitter.com/share?original_referer=https://az-php-app.azurewebsites.net/${state.uid}/${slotProps.data.roomId}?${slotProps.data.title}`"
+                :href="`https://twitter.com/share?original_referer=https://az-php-app.azurewebsites.net/room/${state.uid}/${slotProps.data.roomId}?${slotProps.data.title}`"
                 class="twitter-share-button"
                 data-show-count="false"
                 target="_blank"
