@@ -42,9 +42,7 @@
             <div class="product-tags">
               <span :class="'product-badge status-'">
                 <Tag
-                  v-for="(item, index) in slotProps.data.tags
-                    .split(' ')
-                    .filter((i) => !!i)"
+                  v-for="(item, index) in createTags(slotProps.data.tags)"
                   :key="`tag-${index.toString()}`"
                   :value="item"
                   style="margin-left: 10px; margin-bottom: 10px"
@@ -156,13 +154,14 @@ export default defineComponent({
       displayImage.value = img;
       displayModal.value = true;
     };
-    const removeEmptyName = (materials: { name: string }[]) =>
+    const removeEmptyName = (materials: { name: string; url: string }[]) =>
       materials.filter((i) => !!i.name);
     const filterdRooms = computed(() =>
       rooms.list.filter((i: { tags: string; title: string }) =>
         `${i.tags}${i.title}`.includes(q.value),
       ),
     );
+    const createTags = (tags: string) => tags.split(' ').filter((i) => !!i);
     return {
       openCreateModal,
       openEditModal,
@@ -175,6 +174,7 @@ export default defineComponent({
       openDisplayModal,
       removeEmptyName,
       filterdRooms,
+      createTags,
     };
   },
 });
