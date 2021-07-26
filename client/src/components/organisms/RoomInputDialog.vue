@@ -1,7 +1,9 @@
 <template>
   <Dialog
     :header="title"
+    :modal="true"
     v-model:visible="room.displayModal"
+    :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
     :style="{ width: '50vw' }"
   >
     <div>

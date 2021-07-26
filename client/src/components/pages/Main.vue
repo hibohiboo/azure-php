@@ -29,12 +29,17 @@
               :src="`/uploads/${slotProps.data.uid}/${slotProps.data.roomId}.png`"
               :alt="slotProps.data.name"
               class="product-image"
+              @click="
+                () =>
+                  openDisplayModal(
+                    `/uploads/${slotProps.data.uid}/${slotProps.data.roomId}.png`,
+                  )
+              "
             />
           </div>
           <div>
             <h4 class="p-mb-1">{{ slotProps.data.title }}</h4>
             <div class="product-tags">
-              タグ
               <span :class="'product-badge status-'">
                 <Tag
                   v-for="(item, index) in slotProps.data.tags
@@ -42,7 +47,7 @@
                     .filter((i) => !!i)"
                   :key="`tag-${index.toString()}`"
                   :value="item"
-                  style="margin-left: 10px"
+                  style="margin-left: 10px; margin-bottom: 10px"
                   @click="() => (q = item)"
               /></span>
             </div>
@@ -91,6 +96,16 @@
       </div>
     </template>
   </Carousel>
+  <Dialog
+    v-model:visible="displayModal"
+    :dismissable-mask="true"
+    :modal="true"
+    :show-header="false"
+    :maximizable="true"
+    content-class="p-0"
+  >
+    <img :src="displayImage" alt="preview" :style="{ width: '100%' }"
+  /></Dialog>
 </template>
 
 <script lang="ts">
@@ -103,18 +118,12 @@ import Carousel from 'primevue/carousel';
 import roomsStore from '@/stores/rooms';
 import Tag from 'primevue/tag';
 import InputText from 'primevue/inputtext';
+import Dialog from 'primevue/dialog';
 
 export default defineComponent({
-  components: { RoomInputDialog, Carousel, Button, Tag, InputText },
+  components: { RoomInputDialog, Carousel, Button, Tag, InputText, Dialog },
   name: 'Main',
-  props: {
-    msg: {
-      type: String,
-      required: true,
-    },
-  },
   setup: () => {
-    const count = ref(0);
     const q = ref('');
 
     const { signin, state } = useAuthStore();
@@ -139,14 +148,23 @@ export default defineComponent({
         numScroll: 1,
       },
     ];
+
+    const displayModal = ref(false);
+    const displayImage = ref('');
+    const openDisplayModal = (img: string) => {
+      displayImage.value = img;
+      displayModal.value = true;
+    };
     return {
-      count,
       openCreateModal,
       openEditModal,
       state,
       responsiveOptions,
       rooms,
       q,
+      displayModal,
+      displayImage,
+      openDisplayModal,
     };
   },
 });
